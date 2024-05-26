@@ -5,12 +5,10 @@
 
 class myNode {
 public:
-    //char value;
     int number;
     myNode* next{};
     myNode() = default;
     myNode( myNode* next, int number);
-    //explicit myNode(char value);
     explicit myNode(int number);
 };
 

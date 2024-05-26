@@ -1,6 +1,9 @@
 #include <iostream>
 #include "myQueue.h"
 #include "myVector.h"
+#define left 'l'
+#define right 'r'
+#define none 'n'
 
 using namespace std;
 
@@ -70,20 +73,20 @@ void bfs(myVector graph[], bool *visited, int start){
     }
 }
 
-bool isBiPartite(myVector graph[], char* side, int size){
+bool isBiPartite(myVector graph[], char* side,int size){
     for (int i = 1; i < size; ++i) {
         myQueue q;
         q.push(i);
-        if (side[i] != 'n'){
+        if (side[i] != none){
             continue;
         }
-        side[i] = 'l';
+        side[i] = left;
         while(!q.empty()){
             int v = q.front();
             q.pop();
             for(auto w : graph[v]){
-                if (side[w] == 'n'){
-                    side[w] = (side[v] == 'l') ? 'r' : 'l';
+                if (side[w] == none){
+                    side[w] = (side[v] == left) ? right : left;
                     q.push(w);
                 } else if (side[w] == side[v]){
                     return false;
@@ -94,72 +97,109 @@ bool isBiPartite(myVector graph[], char* side, int size){
     return true;
 }
 
+void isColored(myVector graph[], int* colored, bool *neighborColors, int size){
+    int count = size;
+    for (int i = 1; i < size; ++i) {
+        if (count <= 0){
+            return;
+        }
+        if(colored[i] != 0){
+            continue;
+        }
+        for (int j = 0; j < size; ++j) {
+            neighborColors[j] = false;
+        }
+        for(auto w : graph[i]){
+            if (colored[w] > 0) {
+                neighborColors[colored[w]] = true;
+            }
+        }
+        int color;
+        for (color = 1; color < size; ++color) {
+            if (!neighborColors[color]) {
+                break;
+            }
+        }
+        colored[i] = color;
+        count--;
+    }
+}
+
 int main() {
     int k, n, x, y;
-    cin >> k;
+    scanf("%d", &k);
     for (int i = 0; i < k; ++i) {
-        cin >> n;
+        scanf("%d", &n);
         int size = n+1;
         int* arr = new int[size];
         char* side = new char[size];
         for (int j = 0; j < size; ++j) {
             side[j] = 'n';
         }
-        int total = n*(n-1)/2;
-        int edgesPresent = 0;
+        long long int temp = n;
+        long long int total = temp*(temp-1)/2;
+        long long int edgesPresent = 0;
         auto *graph = new myVector[size];
         for (int j = 1; j <= n; ++j) {
-            cin >> x;
+            scanf("%d", &x);
             arr[j] = x;
             for (int l = 0; l < x; ++l) {
-                cin >> y;
+                scanf("%d", &y);
                 graph[j].push_back(y);
             }
         }
         mergeSort(arr, 1, n);
         for (int j = 1; j <= n; ++j) {
-            cout << arr[j] << " ";//ex1
+            printf("%d ", arr[j]);//ex1
             edgesPresent += arr[j];
             arr[j] = 0;
         }
-        cout << endl;
+        printf("\n");
         int count = 0;
         bool *visited = new bool[size];
-        for (int i = 1; i <= n; ++i) {
-            visited[i] = false;
+        int *colored = new int[size];
+        for (int l = 1; l <= n; ++l) {
+            visited[l] = false;
+            colored[l] = 0;
         }
 
-        for (int i = 1; i <= n; ++i) {
-            if (!visited[i]){
+        for (int l = 1; l <= n; ++l) {
+            if (!visited[l]){
                 count++;
-                bfs(graph, visited, i);
+                bfs(graph, visited, l);
             }
         }
-        cout << count << endl;//ex2
-        if (!isBiPartite(graph, side, size)){
-            cout << "F" << endl;
+        printf("%d\n", count);//ex2
+        if (!isBiPartite(graph, side, size)){//ex3
+            printf("F\n");
         } else {
-            cout << "T" << endl;
+            printf("T\n");
         }
-        //cout << "?" << endl;//ex1
-        //cout << "?" << endl;//ex2
-        //cout << "?" << endl;//ex3
-        cout << "?" << endl;//ex4
-        cout << "?" << endl;//ex5
-        cout << "?" << endl;//ex6a
-        cout << "?" << endl;//ex6b
-        cout << "?" << endl;//ex6c
-        cout << "?" << endl;//ex7
-        //cout << "?" << endl;//ex8
+//        printf("?\n");//ex1
+//        printf("?\n");//ex2
+//        printf("?\n");//ex3
+        printf("?\n");//ex4
+        printf("?\n");//ex5
+//        printf("?\n");//ex6a
+        isColored(graph, colored, visited, size);
+        for (int j = 1; j < size; ++j) {
+            printf("%d ", colored[j]);//ex6a
+            colored[j] = 0;
+        }
+        printf("\n");
 
-        if(edgesPresent % 2 == 1){
-            edgesPresent++;
-        }
-        int edgesNeeded = total - (edgesPresent/2);
-        cout << edgesNeeded << endl;//ex8
+        printf("?\n");//ex6b
+        printf("?\n");//ex6c
+        printf("?\n");//ex7
+//        printf("?\n");//ex8
+
+        long long int edgesNeeded = total - (edgesPresent/2);
+        printf("%lld\n", edgesNeeded);//ex8
         delete[] graph;
         delete[] arr;
         delete[] visited;
+        delete[] colored;
+        delete[] side;
     }
     return 0;
 }
