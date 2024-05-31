@@ -3,9 +3,6 @@
 #include "myVector.h"
 #define left 'l'
 #define right 'r'
-#define none 'n'
-
-using namespace std;
 
 void merge(int arr[], int start, int middle, int end, int old[]){
     int div = middle - start + 1;
@@ -65,21 +62,6 @@ void mergeSort(int arr[], int start, int end, int old[]){
     }
 }
 
-void insertionSort(int graph[], int arr[],int size){
-    for (int i = 2; i < size; ++i) {
-        int j = i;
-        while(j > 1 && graph[j] > graph[j-1]){
-            int temp = graph[j];
-            graph[j] = graph[j-1];
-            graph[j-1] = temp;
-            int t = arr[j];
-            arr[j] = arr[j-1];
-            arr[j-1] = t;
-            j--;
-        }
-    }
-}
-
 void bfs(myVector graph[], bool *visited, int start, char* side, bool& result){
     myQueue q;
     q.push(start);
@@ -98,30 +80,6 @@ void bfs(myVector graph[], bool *visited, int start, char* side, bool& result){
             }
         }
     }
-}
-
-bool isBiPartite(myVector graph[], char* side,int size){
-    myQueue q;
-    for (int i = 1; i < size; ++i) {
-        q.push(i);
-        if (side[i] != none){
-            continue;
-        }
-        side[i] = left;
-        while(!q.empty()){
-            int v = q.front();
-            q.pop();
-            for(auto w : graph[v]){
-                if (side[w] == none){
-                    side[w] = (side[v] == left) ? right : left;
-                    q.push(w);
-                } else if (side[w] == side[v]){
-                    return false;
-                }
-            }
-        }
-    }
-    return true;
 }
 
 void greedyColor(myVector graph[], int* colored, bool *neighborColors, int size){
@@ -199,18 +157,23 @@ void LFColor(myVector graph[], int* colored, bool *neighborColors, int size, con
 
 int main() {
     int k, n, x, y, count;
+    bool partiteResult;
     scanf("%d", &k);
     for (int i = 0; i < k; ++i) {
         scanf("%d", &n);
         int size = n+1;
+        long long int temp = n;
+        long long int total = temp*(temp-1)/2;
+        long long int edgesPresent = 0;
+        count = 0;
+        partiteResult = true;
+
         int* arr = new int[size];
         char* side = new char[size];
         int * old = new int[size];
         bool *visited = new bool[size];
-        long long int temp = n;
-        long long int total = temp*(temp-1)/2;
-        long long int edgesPresent = 0;
         auto *graph = new myVector[size];
+
         for (int j = 1; j < size; ++j) {
             scanf("%d", &x);
             arr[j] = x;
@@ -224,15 +187,13 @@ int main() {
             side[j] = 'n';
             visited[j] = false;
         }
-        //insertionSort(arr, old, size);
         mergeSort(arr, 1, n, old);
         for (int j = 1; j <= n; ++j) {
             printf("%d ", arr[j]);//ex1
             edgesPresent += arr[j];
         }
         printf("\n");
-        count = 0;
-        bool partiteResult = true;
+
         for (int l = 1; l <= n; ++l) {
             if (!visited[l]){
                 count++;
@@ -241,11 +202,7 @@ int main() {
             }
         }
         printf("%d\n", count);//ex2
-//        if (!isBiPartite(graph, side, size)){//ex3
-//            printf("F\n");
-//        } else {
-//            printf("T\n");
-//        }
+
         partiteResult ? printf("T\n") : printf("F\n");
 
         printf("?\n");//ex4
