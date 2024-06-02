@@ -73,6 +73,12 @@ build CMakeFiles/Graphs.dir/myNode.cpp.obj: CXX_COMPILER__Graphs_unscanned_Debug
   OBJECT_DIR = CMakeFiles\Graphs.dir
   OBJECT_FILE_DIR = CMakeFiles\Graphs.dir
 
+build CMakeFiles/Graphs.dir/arrQueue.cpp.obj: CXX_COMPILER__Graphs_unscanned_Debug C$:/Users/matgi/CLionProjects/Graphs/arrQueue.cpp || cmake_object_order_depends_target_Graphs
+  DEP_FILE = CMakeFiles\Graphs.dir\arrQueue.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Graphs.dir
+  OBJECT_FILE_DIR = CMakeFiles\Graphs.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Graphs
@@ -81,7 +87,7 @@ build CMakeFiles/Graphs.dir/myNode.cpp.obj: CXX_COMPILER__Graphs_unscanned_Debug
 #############################################
 # Link the executable Graphs.exe
 
-build Graphs.exe: CXX_EXECUTABLE_LINKER__Graphs_Debug CMakeFiles/Graphs.dir/main.cpp.obj CMakeFiles/Graphs.dir/myQueue.cpp.obj CMakeFiles/Graphs.dir/myVector.cpp.obj CMakeFiles/Graphs.dir/myNode.cpp.obj
+build Graphs.exe: CXX_EXECUTABLE_LINKER__Graphs_Debug CMakeFiles/Graphs.dir/main.cpp.obj CMakeFiles/Graphs.dir/myQueue.cpp.obj CMakeFiles/Graphs.dir/myVector.cpp.obj CMakeFiles/Graphs.dir/myNode.cpp.obj CMakeFiles/Graphs.dir/arrQueue.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Graphs.dir
