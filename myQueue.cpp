@@ -7,10 +7,6 @@
 #include "myNode.h"
 
 void myQueue::pop() {
-    if (empty()) {
-        std::cout << "Empty queue" << std::endl;
-        return;
-    }
     myNode* temp = Front;
     if (Front == Back) {
         Front = Back = nullptr;

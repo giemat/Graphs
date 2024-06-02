@@ -34,27 +34,11 @@ void myVector::push_back(int number) {
     vectorSize++;
 }
 
-void myVector::pop_back() {
-    if (vectorSize > 0) {
-        vectorSize--;
-    } else {
-        std::cout << "Empty vector" << std::endl;
-    }
-}
-
 int myVector::back() const {
-    if (empty()) {
-        std::cout << "Empty vector no back" << std::endl;
-        return 0;
-    }
     return vector[vectorSize - 1];
 }
 
 int myVector::front() const {
-    if (empty()) {
-        std::cout << "Empty vector no front" << std::endl;
-        return 0;
-    }
     return vector[0];
 }
 

@@ -1,6 +1,6 @@
 
 #include "myNode.h"
-myNode::myNode(myNode* next, int number): next(next), number(number){}
+myNode::myNode(myNode* next, int number): number(number), next(next){}
 
 myNode::myNode(int number){
     this->number = number;

@@ -14,7 +14,6 @@ public:
     myVector();
     myVector(const myVector &v);
     void push_back(int number);
-    void pop_back();
     void clear();
     [[nodiscard]] int back() const;
     [[nodiscard]] int front() const;
